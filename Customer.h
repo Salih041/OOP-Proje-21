@@ -1,0 +1,52 @@
+﻿//152120231053 Zeynep Alara Taş 27.11.2025
+#pragma once
+#include <string>
+#include <iostream>
+
+using namespace std;
+
+class Customer {
+private:
+    long customerID;
+    string name;
+    string address;
+    string phone;
+    string email;
+    double bonus = 0;
+    string username;
+    string password;
+
+public:
+    Customer();
+    Customer(long cID, string name, string address, string phone,
+        string email, string username, string pass);
+
+    // UML metotları
+    void sendBill() const;
+
+    long getCustomerID() const;
+    string getName() const;
+    string getAddress() const;
+    string getPhone() const;
+    string getEmail() const;
+    double getBonus() const;
+    string getUsername() const;
+    string getPassword() const;
+
+    void setCustomerID(long cID);
+    void setName(string name);
+    void setAddress(string address);
+    void setPhone(string phone);
+    void setEmail(string email);
+    void setBonus(double bonus);
+    void setUsername(string username);
+    void setPassword(string pass);
+
+    bool checkAccount(string username, string password) const;  // UML → bool
+
+    void addBonus(double amount);
+    void useBonus();
+
+    bool login(string username, string password) const;
+    void printCustomerInfo() const;
+};
