@@ -22,13 +22,13 @@ class Product {
 		virtual ~Product();
 
 		int getID() const;
-		void SetID(int id);
+		void setID(int id);
 
 		string getName() const;
-		void SetName(string name);
+		void setName(string name);
 
 		double getPrice() const;
-		void SetPrice(double price);
+		void setPrice(double price);
 
 		virtual void printProperties() = 0;
 };

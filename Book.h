@@ -18,18 +18,18 @@ class Book : public Product {
 		string publisher;
 		int page;
 	public:
-		Book(int id, string name, double price, string author, string pulbisher, int page);
+		Book(int id, string name, double price, string author, string publisher, int page);
 		Book();
 		~Book();
 
 		string getAuthor() const;
-		void SetAuthor(string author);
+		void setAuthor(string author);
 
 		string getPublisher() const;
-		void SetPublisher(string publisher);
+		void setPublisher(string publisher);
 
 		int getPage() const;
-		void SetPage(int page);
+		void setPage(int page);
 
 		void printProperties() override;
 };
