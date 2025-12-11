@@ -8,6 +8,6 @@ class Payment
 
     public:
     double getAmount();
-    void setAmount(double amount);
-    void performPayment();
+    void setAmount(double a);
+    virtual void performPayment() = 0;
 };

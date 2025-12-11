@@ -1,8 +1,9 @@
 #include <string>
+#include "Payment.h"
 
 using namespace std;
 
-class CreditCard
+class CreditCard: public Payment
 {
     private:
     long number;
@@ -12,9 +13,9 @@ class CreditCard
     public:
     void performPayment();
     long getNumber();
-    void setNumber(long number);
+    void setNumber(long n);
     string getType();
-    void setType(string type);
+    void setType(string t);
     string getExpDate();
-    void setExpDate(string expDate);
+    void setExpDate(string e);
 };

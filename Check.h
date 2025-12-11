@@ -1,8 +1,9 @@
 #include <string>
+#include "Payment.h"
 
 using namespace std;
 
-class Check
+class Check: public Payment
 {
     private:
     string name;
