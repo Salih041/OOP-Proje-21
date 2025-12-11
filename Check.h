@@ -1,9 +1,13 @@
+/*
+    Enes Kılıç - 11.12.2025
+*/
+
 #include <string>
-#include "Payment.h"
+#include "Payment.h"        // Miras alacağı için Payment header dosyası dahil edildi.
 
 using namespace std;
 
-class Check: public Payment
+class Check: public Payment     // Payment class'ından public olarak miras alınıyor.
 {
     private:
     string name;

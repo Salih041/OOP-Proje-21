@@ -1,9 +1,13 @@
+/*
+    Enes Kılıç - 11.12.2025
+*/
+
 #include <string>
-#include "Payment.h"
+#include "Payment.h"        // Miras alacağı için Payment header dosyası dahil edildi.
 
 using namespace std;
 
-class CreditCard: public Payment
+class CreditCard: public Payment        // Payment class'ından public olarak miras alınıyor.
 {
     private:
     long number;
