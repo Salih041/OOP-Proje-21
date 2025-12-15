@@ -17,3 +17,4 @@ void Payment::setAmount(double a)   // amount değeri değiştiriliyor.
 {
     amount = a;
 }
+
