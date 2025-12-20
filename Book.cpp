@@ -9,7 +9,7 @@ Salih Özbek
 #include <string>
 using namespace std;
 
-Book::Book(int id, string name, double price, string author, string publisher, int page) : Product(id, name, price) {
+Book::Book(string name, double price, string author, string publisher, int page) : Product(name, price) {
 this->author = author;
 this->publisher = publisher;
 this->page = page;

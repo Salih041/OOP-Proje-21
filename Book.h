@@ -18,7 +18,7 @@ class Book : public Product {
 		string publisher;
 		int page;
 	public:
-		Book(int id, string name, double price, string author, string publisher, int page);
+		Book(string name, double price, string author, string publisher, int page);
 		Book();
 		~Book();
 
