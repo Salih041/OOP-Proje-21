@@ -13,11 +13,12 @@ using namespace std;
 
 class Product {
 	protected:
+		static int lastProductId;
 		int ID;
 		string name;
 		double price;
 	public:
-		Product(int id, string name, double price);
+		Product(string name, double price);
 		Product();
 		virtual ~Product();
 

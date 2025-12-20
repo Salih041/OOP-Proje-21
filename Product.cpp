@@ -9,8 +9,10 @@ Salih Özbek
 #include <string>
 using namespace std;
 
-Product::Product(int id, string name, double price) {
-	this->ID = id;
+int Product::lastProductId = 0;
+
+Product::Product(string name, double price) {
+	this->ID = lastProductId;
 	this->name = name;
 	this->price = price;
 }
