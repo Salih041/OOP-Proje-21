@@ -1,3 +1,8 @@
+/*
+    Emre Karaaydın 21.12.25
+*/
+
+
 #include "Magazine.h"
 
 // üye baslatici liste ile base classa erişim

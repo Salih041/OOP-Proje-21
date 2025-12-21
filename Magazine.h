@@ -1,3 +1,8 @@
+/*
+    Emre Karaaydın 21.12.25
+*/
+
+
 #ifndef _MAGAZINE_H_
 #define _MAGAZINE_H_
 #include "Product.h"

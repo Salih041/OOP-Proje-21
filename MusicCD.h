@@ -1,3 +1,8 @@
+/*
+    Emre Karaaydın 21.12.25
+*/
+
+
 #ifndef MUSICCD_H
 #define MUSICCD_H
 

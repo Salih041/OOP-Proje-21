@@ -1,3 +1,7 @@
+/*
+    Emre Karaaydın 21.12.25
+*/
+
 #include "MusicCD.h"
 // üye baslatici liste ile base classa erişim
 MusicCD::MusicCD(std::string name_inp, double price_inp,std::string singer_inp, std::string type_inp)
