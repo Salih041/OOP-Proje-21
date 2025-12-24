@@ -1,6 +1,6 @@
 /*
 Product.h
-Salih Özbek
+Salih ï¿½zbek
 08.12.2025
 */
 
@@ -31,6 +31,6 @@ class Product {
 		double getPrice() const;
 		void setPrice(double price);
 
-		virtual void printProperties() = 0;
+		virtual void printProperties() const = 0;
 };
 #endif
