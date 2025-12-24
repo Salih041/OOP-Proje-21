@@ -12,13 +12,13 @@ using namespace std;
 int Product::lastProductId = 0;
 
 Product::Product(string name, double price) {
-	this->ID = lastProductId;
+	this->ID = ++lastProductId;
 	this->name = name;
 	this->price = price;
 }
 
 Product::Product() {
-	this->ID = 0;
+	this->ID = ++lastProductId;
 	this->name = "";
 	this->price = 0.0;
 }

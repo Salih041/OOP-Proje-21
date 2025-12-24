@@ -7,7 +7,7 @@
 
 // include lar gelecek
 #include "Product.h"
-class Customer;
+#include "Customer.h"
 
 #include <iostream>
 #include <string>
@@ -33,9 +33,11 @@ public:
 
 	void DisplayAdminProductsMenu();
 	void AddNewProduct();
-
-	void DisplayAdminCustomersMenu();
 	void ShowAllProducts();
+	void DisplayAdminCustomersMenu();
+	void AddNewCustomer();
+	void ShowAllCustomers();
+	
 };
 
 #endif

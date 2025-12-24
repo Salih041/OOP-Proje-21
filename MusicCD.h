@@ -14,7 +14,7 @@ private:
     std::string type;
 
 public:
-    MusicCD(string name_inp, double price_inp, string singer_inp, string type_inp);
+    MusicCD(std::string name_inp, double price_inp, std::string singer_inp, std::string type_inp);
 
     void printProperties() const override; //get fonksiyonları const tanımlandı. base classtaki virtual metodu override edildi
     const std::string &getSinger() const;  //bellek maliyetinden kaçınmak için referans ile iletildi

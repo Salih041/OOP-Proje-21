@@ -47,7 +47,7 @@ void Book::setPage(int page) {
 	this->page = page;
 }
 
-void Book::printProperties() {
+void Book::printProperties() const {
     cout << "---------------------------------" << endl;
     cout << "Product Type : BOOK" << endl;
     cout << "ID        : " << ID << endl;

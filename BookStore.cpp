@@ -2,15 +2,17 @@
 // Salih Özbek
 // 20.12.2025
 
+#include "MusicCD.h"
 #include "BookStore.h"
 #include "Menu.h"
-#include "Product.h"
 #include "Book.h"
 #include "Cash.h"
 #include "Check.h"
 #include "CreditCard.h"
 #include "Payment.h"
-
+#include "Magazine.h"
+#include "ProductToPurchase.h"
+#include "ShoppingCart.h"
 // includelar
 
 #include <iostream>
@@ -33,16 +35,21 @@ BookStore::~BookStore() {
 void BookStore::LoadData() {
 	products.push_back(new Book("Suc ve Ceza", 150, "Dostoyevski", "Is Bankasi", 688));
 	products.push_back(new Book("Kasagi", 80, "Omer Seyfettin", "Can", 124));
-	//music
-	//magazine
+	products.push_back(new MusicCD("Bertaraf Et", 50, "Hayko Cepkin", "Metal"));
+	products.push_back(new MusicCD("Paramparça", 300, "Müslüm Gürses", "Arabesk"));
+	products.push_back(new Magazine("Bilim ve Gelecek", 120, 5, "Bilim ve Teknoloji"));
 
-	//customers
+	customers.push_back(new Customer(0, "Zeynep", "Eskiþehir", "05554442211", "zeynep123@gmail.com", "zeynep1", "123456"));
+	customers.push_back(new Customer(0, "Kerem", "Eskiþehir", "05223334488", "kerem123@gmail.com", "kerem2", "kerem123"));
+	customers.push_back(new Customer(0, "Emre", "Eskiþehir", "05112551414", "emre123@gmail.com", "emre6", "emre4380"));
+	customers.push_back(new Customer(0, "Enes", "Eskiþehir", "05402502121", "enes123@gmail.com", "enes2", "guclusifre"));
+	customers.push_back(new Customer(0, "Salih", "Eskiþehir", "05382001212", "salih4141@gmail.com", "salih4", "123789"));
 }
 
 void BookStore::Login()
 {
 	if (currentCustomer != nullptr) {
-	cout << "\nZaten Giris Yapildi: " /*<< currentCustomer->getUsername()*/ << endl;
+	cout << "\nZaten Giris Yapildi: " << currentCustomer->getUsername() << endl;
 		return;
 	}
 	cin.ignore();
@@ -56,10 +63,17 @@ void BookStore::Login()
 	bool isFound = false;
 	// customerlar icinde arama 
 	// if (c->username == usinput && psw == pswinput ...
+	for (Customer* c : customers) {
+		if (c->checkAccount(usernameInput, passwordInput)) {
+			currentCustomer = c;
+			isFound = true;
+			break;
+		}
+	}
 
 	if (isFound)
 	{
-		cout << "HOS GELDÝNÝZ!" << endl;
+		cout << "HOS GELDÝNÝZ!" << currentCustomer->getName() << endl;
 	}
 	else {
 		cout << "\nHATALI KULLANICI ADI VEYA SIFRE!" << endl;
@@ -86,7 +100,7 @@ void BookStore::DisplayMenu() {
 
 		switch (secim) {
 		case 1:
-			// displaycustomeradminmenu
+			DisplayAdminCustomersMenu();
 			break;
 		case 2:
 			DisplayAdminProductsMenu();
@@ -103,8 +117,42 @@ void BookStore::DisplayMenu() {
 
 // 1- ADMIN MENU <- customers
 void BookStore::DisplayAdminCustomersMenu() {
-	// customer ekle
-	// customerlari goster
+	Menu customersAdminMenu("KULLANICILAR MENUSU (ADMIN)");
+	customersAdminMenu.AddOption("Yeni Kullanýcý Ekle");
+	customersAdminMenu.AddOption("Kullanýcýlarý Listele");
+	customersAdminMenu.AddOption("Geri");
+
+	while (true)
+	{
+		int secim = customersAdminMenu.DisplayAndGetChoice();
+		switch (secim) {
+		case 1:
+			AddNewCustomer();
+			break;
+		case 2:
+			ShowAllCustomers();
+			break;
+		case 3:
+			return;
+		}
+	}
+}
+// customers admin menu icin yardimci fonksiyon
+void BookStore::AddNewCustomer() {
+	cout << "\n--- KULLANICI EKLEME ---" << endl;
+	// customer ekleme
+}
+
+void BookStore::ShowAllCustomers() {
+	cout << "KULLANICILAR" << endl;
+	if (customers.empty()) {
+		cout << "Kullanýcý Yok" << endl;
+		return;
+	}
+	for (Customer* c : customers) {
+		c->printCustomerInfo();
+		cout << "==================================================" << endl;
+	}
 }
 
 // 2- ADMIN MENU <- products
@@ -130,6 +178,8 @@ void BookStore::DisplayAdminProductsMenu() {
 		}
 	}
 }
+
+
 // products admin menu icin yardimci fonksiyon
 void BookStore::AddNewProduct() {
 	cout << "\n--- URUN EKLEME ---" << endl;
@@ -165,14 +215,42 @@ void BookStore::AddNewProduct() {
 		products.push_back(new Book(name, price, author, publisher, page));
 	}
 	else if (turSecim == 2) {
-		// magazine
+		int issue;
+		string type;
+		cout << "Basim : ";
+		cin.ignore();
+		cin >> issue;
+		cout << "Type : ";
+		getline(cin, type);
+		
+		products.push_back(new Magazine(name, price, issue, type));
 	}
 	else if (turSecim == 3)
 	{
-		// music
+		string singer, type;
+		cout << "Sarkici : ";
+		cin.ignore();
+		getline(cin, singer);
+		cout << "Type : ";
+		cin.ignore();
+		getline(cin, type);
+
+		products.push_back(new MusicCD(name,price,singer,type));
 	}
 	else {
 		cout << "Hatali Secim!!" << endl;
+	}
+}
+// products admin ve shopping menuleri için yardýmcý fonksiyon
+void BookStore::ShowAllProducts() {
+	cout << "URUNLER" << endl;
+	if (products.empty()) {
+		cout << "Urun Yok" << endl;
+		return;
+	}
+	for (Product* p : products) {
+		p->printProperties();
+		cout << "==================================================" << endl;
 	}
 }
 
@@ -245,19 +323,4 @@ void BookStore::DisplayShoppingMenu() {
 	}
 }
 
-
-
-
-
-void BookStore::ShowAllProducts() {
-	cout << "URUNLER" << endl;
-	if (products.empty()) {
-		cout << "Urun Yok" << endl;
-		return;
-	}
-	for (Product* p : products) {
-		p->printProperties();
-		cout << "==================================================" << endl;
-	}
-}
 
