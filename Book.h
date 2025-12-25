@@ -31,7 +31,7 @@ class Book : public Product {
 		int getPage() const;
 		void setPage(int page);
 
-		void printProperties() override;
+		void printProperties() const override;
 };
 
 #endif

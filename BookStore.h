@@ -7,8 +7,8 @@
 
 // include lar gelecek
 #include "Product.h"
-class Customer;
-
+#include "Customer.h"
+#include "ShoppingCart.h"
 #include <iostream>
 #include <string>
 #include <vector>
@@ -19,6 +19,7 @@ private:
 	std::vector<Product*> products;
 	std::vector<Customer*> customers;
 	Customer* currentCustomer;
+	ShoppingCart* currentCart;
 
 public:
 	BookStore();
@@ -33,9 +34,11 @@ public:
 
 	void DisplayAdminProductsMenu();
 	void AddNewProduct();
-
-	void DisplayAdminCustomersMenu();
 	void ShowAllProducts();
+	void DisplayAdminCustomersMenu();
+	void AddNewCustomer();
+	void ShowAllCustomers();
+	
 };
 
 #endif

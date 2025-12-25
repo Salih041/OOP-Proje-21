@@ -2,6 +2,9 @@
     Enes Kılıç - 11.12.2025
 */
 
+#ifndef CHECK_H
+#define CHECK_H
+
 #include <string>
 #include "Payment.h"        // Miras alacağı için Payment header dosyası dahil edildi.
 
@@ -20,3 +23,5 @@ class Check: public Payment     // Payment class'ından public olarak miras alı
     string getBankID();
     void setBankID(string b);
 };
+
+#endif

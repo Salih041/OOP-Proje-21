@@ -8,8 +8,13 @@ MusicCD::MusicCD(std::string name_inp, double price_inp,std::string singer_inp, 
     : Product(name_inp, price_inp), singer(singer_inp), type(type_inp) {}
   // protected üyelere doğrudan erişim
 void MusicCD::printProperties() const {
-    cout << "ID: " << ID << " Name: " << name << " Price: " << price 
-         << " Singer: " << singer << " Type: " << type << endl;
+    std::cout << "---------------------------------" << std::endl;
+    std::cout << "ID        : " << ID << endl;
+    std::cout << "Name      : " << name << std::endl;
+    std::cout << "Price     : " << price << " TL" << std::endl;
+    std::cout << "Singer    : " << singer << std::endl;
+    std::cout << "Type      : " << type << std::endl;
+    std::cout << "---------------------------------" << std::endl;
 }
 
 const std::string& MusicCD::getSinger() const {

@@ -2,30 +2,24 @@
     Kerem Riza Özerdem - 23.12.2025
 */
 
-#include "ProductToPurchase.h"
+#ifndef PRODUCTTOPURCHASE_H
+#define PRODUCTTOPURCHASE_H
 
-// Constructor ile baslangic degerlerini atiyoruz
-ProductToPurchase::ProductToPurchase(Product* p, int q) {
-    this->product = p;
-    this->quantity = q;
-}
+#include "Product.h" 
 
-// Urunu dondurur
-Product* ProductToPurchase::getProduct() const {
-    return product;
-}
+class ProductToPurchase {
+private:
+    Product* product; // Urun pointer'ı (Abstract sınıf oldugu icin)
+    int quantity;     // Urun adedi
 
-// Urunu gunceller
-void ProductToPurchase::setProduct(Product* p) {
-    this->product = p;
-}
+public:
+    ProductToPurchase(Product* p, int q);
 
-// Adet bilgisini dondurur
-int ProductToPurchase::getQuantity() const {
-    return quantity;
-}
+    Product* getProduct() const;
+    void setProduct(Product* p);
 
-// Adet bilgisini gunceller
-void ProductToPurchase::setQuantity(int q) {
-    this->quantity = q;
-}
+    int getQuantity() const;
+    void setQuantity(int q);
+};
+
+#endif
