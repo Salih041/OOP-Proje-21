@@ -2,6 +2,9 @@
     Enes Kılıç - 11.12.2025
 */
 
+#ifndef CREDITCARD_H
+#define CREDITCARD_H
+
 #include <string>
 #include "Payment.h"        // Miras alacağı için Payment header dosyası dahil edildi.
 
@@ -23,3 +26,5 @@ class CreditCard: public Payment        // Payment class'ından public olarak mi
     string getExpDate();
     void setExpDate(string e);
 };
+
+#endif

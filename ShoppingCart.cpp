@@ -130,6 +130,7 @@ void ShoppingCart::cancelOrder() {
 void ShoppingCart::showInvoice() {
     cout << "\n****** FATURA ******" << endl;
     cout << "Musteri: " << customer->getName() << endl;
-    cout << "Odenen Tutar: " << paymentMethod->getAmount() << " TL" << endl;
+    //paymentMethod varsa yazdır
+    if(paymentMethod != nullptr) cout << "Odenen Tutar: " << paymentMethod->getAmount() << " TL" << endl;
     cout << "********************\n" << endl;
 }
