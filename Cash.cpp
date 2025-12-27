@@ -3,11 +3,14 @@
 */
 
 #include <iostream>
-#include "Cash.h"       // Header dosyası dahil ediliyor.
+#include "Cash.h" // Header dosyası dahil ediliyor.
 
 using namespace std;
 
-void Cash::performPayment()     // Payment class'ında virtual olarak oluşturulan fonksiyonun görev tanımı.
+Cash::Cash(double amount)
+    : Payment(amount) {}
+
+void Cash::performPayment() // Payment class'ında virtual olarak oluşturulan fonksiyonun görev tanımı.
 {
     cout << "Cash payment done" << endl;
 }

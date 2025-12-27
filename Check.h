@@ -17,11 +17,15 @@ class Check: public Payment     // Payment class'ından public olarak miras alı
     string bankID;
 
     public:
-    void performPayment();
-    string getName();
-    void setName(string n);
-    string getBankID();
-    void setBankID(string b);
+    Check(double amount, const string& name, const string& bankID);
+
+    void performPayment() override;
+
+    string getName() const;
+    void setName(const string& n);
+
+    string getBankID() const;
+    void setBankID(const string& b);
 };
 
 #endif
