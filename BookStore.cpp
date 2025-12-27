@@ -35,9 +35,13 @@ BookStore::~BookStore() { // Belleði temizle
 void BookStore::LoadData() {
 	products.push_back(new Book("Suc ve Ceza", 150, "Dostoyevski", "Is Bankasi", 688));
 	products.push_back(new Book("Kasagi", 80, "Omer Seyfettin", "Can", 124));
+	products.push_back(new Book("Beyaz Diþ", 100, "Jack London", "Can", 298));
 	products.push_back(new MusicCD("Bertaraf Et", 50, "Hayko Cepkin", "Metal"));
 	products.push_back(new MusicCD("Paramparça", 300, "Müslüm Gürses", "Arabesk"));
+	products.push_back(new MusicCD("Sokak Lambasý", 150, "Yirmi7", "Rock"));
 	products.push_back(new Magazine("Bilim ve Gelecek", 120, 5, "Bilim ve Teknoloji"));
+	products.push_back(new Magazine("National Geographic", 300, 18, "Dünya Kültürü"));
+	products.push_back(new Magazine("Meraklý Minik", 40, 2, "Çocuk"));
 
 	customers.push_back(new Customer(0, "Zeynep", "Eskiþehir", "05554442211", "zeynep123@gmail.com", "zeynep1", "123456"));
 	customers.push_back(new Customer(0, "Kerem", "Eskiþehir", "05223334488", "kerem123@gmail.com", "kerem2", "kerem123"));
@@ -85,18 +89,19 @@ void BookStore::Login()
 
 void BookStore::Run() { // Ana Program Akýþý
 	cout << "WELCOME" << endl;
+	Menu::WaitForUser();
 	DisplayMenu();
 }
 
 // ANA MENU
 void BookStore::DisplayMenu() {
 	Menu mainMenu("MAIN MENU");
-	mainMenu.AddOption("Customers (admin)");
-	mainMenu.AddOption("Products (admin)");
-	mainMenu.AddOption("Shopping");
+	mainMenu.AddOption("Customers Menu");
+	mainMenu.AddOption("Products Menu");
+	mainMenu.AddOption("Shopping Menu");
 	mainMenu.AddOption("EXIT");
 
-	while (true) {
+	while (true) { // sonsuz döngü case 4-de kýrýlacak
 		int secim = mainMenu.DisplayAndGetChoice();
 
 		switch (secim) {
@@ -116,7 +121,7 @@ void BookStore::DisplayMenu() {
 	}
 }
 
-// 1- ADMIN MENU <- customers
+// 1- CUSTOMERS MENU
 void BookStore::DisplayAdminCustomersMenu() {
 	Menu customersAdminMenu("CUSTOMERS MENU");
 	customersAdminMenu.AddOption("Add New Customer");
@@ -136,6 +141,7 @@ void BookStore::DisplayAdminCustomersMenu() {
 		case 3:
 			return;
 		}
+		Menu::WaitForUser();
 	}
 }
 // customers admin menu icin yardimci fonksiyon
@@ -157,7 +163,7 @@ void BookStore::AddNewCustomer() {
 	cout << "Password    : ";
 	getline(cin, password);
 
-	customers.push_back(new Customer(0, name, address, phone, email, username, password));
+	customers.push_back(new Customer(0, name, address, phone, email, username, password)); // yeni customerý ekle
 	
 	cout << "Customer Created Successfully" << endl;
 }
@@ -174,7 +180,7 @@ void BookStore::ShowAllCustomers() {
 	}
 }
 
-// 2- ADMIN MENU <- products
+// 2- PRODUCTS MENU
 void BookStore::DisplayAdminProductsMenu() {
 	Menu productsAdminMenu("PRODUCTS MENU");
 	productsAdminMenu.AddOption("Add New Product");
@@ -195,6 +201,7 @@ void BookStore::DisplayAdminProductsMenu() {
 		case 3:
 			return;
 		}
+		Menu::WaitForUser();
 	}
 }
 
@@ -211,6 +218,7 @@ void BookStore::AddNewProduct() {
 
 	if (turSecim == 0) return;
 
+	// önce bütün ürünler için ortak olan alanlar alýnýr
 	string name;
 	double price;
 	cout << "Product Name : ";
@@ -219,7 +227,7 @@ void BookStore::AddNewProduct() {
 	cout << "Price        : ";
 	cin >> price;
 
-
+	// sonrasýnda ürün türüne özel girdiler alýnýr
 	if (turSecim == 1) {
 
 		string author, publisher;
@@ -286,8 +294,8 @@ void BookStore::DisplayShoppingMenu() {
 	customerMenu.AddOption("Show Bonus");
 	customerMenu.AddOption("Use Bonus");
 	customerMenu.AddOption("Place Order");
-	customerMenu.AddOption("Cancel Order");
-	customerMenu.AddOption("Show Invoice");
+	customerMenu.AddOption("Cancel Order"); // sipariþ iptali
+	customerMenu.AddOption("Show Invoice"); // fatura
 	customerMenu.AddOption("Log Out");
 
 	bool stayInMenu = true;
@@ -296,11 +304,12 @@ void BookStore::DisplayShoppingMenu() {
 		if (currentCustomer == nullptr && !(secim == 1 || secim == 2 || secim == 11))  // 1, 2 ,11 basarsa switch case e geç 
 		{
 			cout << "You must log in to perform this operation!" << endl;
+			Menu::WaitForUser(); // konsolu temizlemeden önce okunmasý için kullanýcýdan girdi bekler
 			continue;
 		}
-		if (currentCustomer != nullptr && currentCart == nullptr) {
-			currentCart = new ShoppingCart();
-			currentCart->setCustomer(currentCustomer);
+		if (currentCustomer != nullptr && currentCart == nullptr) { // kullanýcý var ama sepeti yoksa
+			currentCart = new ShoppingCart(); 
+			currentCart->setCustomer(currentCustomer); // yeni bir sepet oluþtur ve kullancýya ver
 		}
 
 
@@ -320,9 +329,9 @@ void BookStore::DisplayShoppingMenu() {
 				cout << "Your Cart is Empty" << endl;
 			break;
 		case 4:
-		{// add to cart
-			cout << "=== Add Product to Cart ===";
-			cout << "Product ID to add";
+		{// add product to cart
+			cout << "=== Add Product to Cart ===" << endl;
+			cout << "Product ID to add : ";
 			int idToAdd;
 			cin >> idToAdd;
 			Product* selectedProduct = nullptr;
@@ -335,7 +344,7 @@ void BookStore::DisplayShoppingMenu() {
 			if (selectedProduct != nullptr)
 			{
 				cout << "Product: " << selectedProduct->getName() << " ( " << selectedProduct->getPrice() << " TL )" << endl;
-				cout << "Quantity";
+				cout << "Quantity : ";
 				int quantityInput;
 				cin >> quantityInput;
 				currentCart->addProduct(selectedProduct, quantityInput);
@@ -379,7 +388,7 @@ void BookStore::DisplayShoppingMenu() {
 			break;
 		case 8:
 		{
-			// siparis
+			// siparis ver
 			cout << "Select Payment Method" << endl;
 			cout << "1. Credit Cart" << endl;
 			cout << "2. Cash" << endl;
@@ -388,25 +397,23 @@ void BookStore::DisplayShoppingMenu() {
 			int paySecim;
 			cin >> paySecim;
 
+			// amount deðerleri ShoppingCart dan geleceði için baþlangýçta 0.0 ile oluþturuyoruz
 			Payment* newPayment = nullptr;
 			if (paySecim == 1) {
-				// cc
+				// credit card
 				long no;
 				string cardType, expDate;
 				cout << "Card Number     : "; cin >> no;
 				cout << "Card Type       : "; cin.ignore(); getline(cin, cardType);
 				cout << "Expiration Date : "; getline(cin, expDate);
 
-				CreditCard* cc = new CreditCard();
-				cc->setNumber(no);
-				cc->setType(cardType);
-				cc->setExpDate(expDate);
+				CreditCard* cc = new CreditCard(0.0,no,cardType,expDate);
 				newPayment = cc;
 			}
 			else if (paySecim == 2)
 			{
 				// cash
-				newPayment = new Cash();
+				newPayment = new Cash(0.0);
 			}
 			else if (paySecim == 3)
 			{
@@ -416,9 +423,7 @@ void BookStore::DisplayShoppingMenu() {
 				cin.ignore(); getline(cin, name);
 				cout << "Bank ID      : "; getline(cin, bankId);
 
-				Check* c = new Check();
-				c->setBankID(bankId);
-				c->setName(name);
+				Check* c = new Check(0.0,name,bankId);
 				newPayment = c;
 			}
 			else
@@ -456,7 +461,10 @@ void BookStore::DisplayShoppingMenu() {
 			stayInMenu = false;
 			break;
 		}
-
+		if (stayInMenu)
+		{
+			Menu::WaitForUser();
+		}
 	}
 }
 

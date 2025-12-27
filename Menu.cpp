@@ -19,7 +19,26 @@ void Menu::AddOption(string option) {
 	options.push_back(option); // yeni secenek ekle
 }
 
+void Menu::ClearScreen() { // ekraný temizleme
+	#ifdef _WIN32
+		system("cls");
+	#else
+		system("clear");
+	#endif
+}
+
+void Menu::WaitForUser() { // kullanýcý yazýlarý okuyabilsin diye ekraný bekletme
+	#ifdef _WIN32
+		cout << endl;
+		system("pause");
+	#else
+		cin.ignore(numeric_limits<streamsize>::max(), '\n');
+		cin.get();
+	#endif
+}
+
 int Menu::DisplayAndGetChoice() {
+	ClearScreen();
 	cout << "|=========" << this->title << "=========|" << endl;
 	
 	for (int i = 0; i < options.size(); i++) {   // option'larý yazdýr

@@ -12,12 +12,12 @@ using namespace std;
 int Product::lastProductId = 0;
 
 Product::Product(string name, double price) {
-	this->ID = ++lastProductId;
+	this->ID = ++lastProductId;  // static tutulan son ürün id si 1 artýrýlýp yeni ürüne atanýr
 	this->name = name;
 	this->price = price;
 }
 
-Product::Product() {
+Product::Product() { // constructor a veri gönderilmezse default deðerlerle oluþturulur
 	this->ID = ++lastProductId;
 	this->name = "";
 	this->price = 0.0;

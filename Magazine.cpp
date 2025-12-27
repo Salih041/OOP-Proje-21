@@ -10,11 +10,10 @@ Magazine::Magazine(string name_inp, double price_inp, int issue_inp, string type
     : Product(name_inp, price_inp), issue(issue_inp), type(type_inp) {}
 
 void Magazine::printProperties() const {
-    // protected üyelere doğrudan erişim
     cout << "---------------------------------" << endl;
-    cout << "ID        : " << ID << endl;
-    cout << "Name      : " << name << endl;
-    cout << "Price     : " << price << " TL" << endl;
+    cout << "ID        : " << getID() << endl;
+    cout << "Name      : " << getName() << endl;
+    cout << "Price     : " << getPrice() << " TL" << endl;
     cout << "Issue     : " << issue << endl;
     cout << "Type      : " << type << endl;
     cout << "---------------------------------" << endl;

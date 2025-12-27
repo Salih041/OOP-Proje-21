@@ -20,6 +20,9 @@ public:
 	~Menu(); // default destructure
 	int DisplayAndGetChoice(); // Secenekleri basan ve kullanýcýdan secim alan fonksiyon
 	void AddOption(std::string option); // yeni secenek ekleme fonksiyonu
+
+	static void ClearScreen(); // ekraný temizle
+	static void WaitForUser(); // kullanýcýdan bir tuþa basmasýný iste, ekran temizlenmeden önce okunmasý için
 };
 
 #endif

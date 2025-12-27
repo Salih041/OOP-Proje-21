@@ -12,16 +12,18 @@ Salih Özbek
 #include "Product.h"
 using namespace std;
 
-class Book : public Product {
+class Book : public Product { // producttan miras alýr
 	private:
 		string author;
 		string publisher;
 		int page;
 	public:
+		// constructor destructor
 		Book(string name, double price, string author, string publisher, int page);
 		Book();
 		~Book();
 
+		// getter setter fonksiyonlar
 		string getAuthor() const;
 		void setAuthor(string author);
 
@@ -30,8 +32,8 @@ class Book : public Product {
 
 		int getPage() const;
 		void setPage(int page);
-
-		void printProperties() const override;
+		// özellikleri yazdýrma fonksiyonu
+		void printProperties() const override; // üst classtan gelen fonksiyon override edilir
 };
 
 #endif

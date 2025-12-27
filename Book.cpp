@@ -9,6 +9,7 @@ Salih Özbek
 #include <string>
 using namespace std;
 
+// gelen girdilerden ortak olanlar üst Product classýnýn constructorýna gönderilir
 Book::Book(string name, double price, string author, string publisher, int page) : Product(name, price) {
 this->author = author;
 this->publisher = publisher;
@@ -49,9 +50,9 @@ void Book::setPage(int page) {
 
 void Book::printProperties() const {
     cout << "---------------------------------" << endl;
-    cout << "ID        : " << ID << endl;
-    cout << "Name      : " << name << endl;
-    cout << "Price     : " << price << " TL" << endl;
+    cout << "ID        : " << getID() << endl;
+    cout << "Name      : " << getName() << endl;
+    cout << "Price     : " << getPrice() << " TL" << endl;
     cout << "Author    : " << author << endl;
     cout << "Publisher : " << publisher << endl;
     cout << "Page      : " << page << endl;
