@@ -48,7 +48,7 @@ void ShoppingCart::addProduct(Product* product, int quantity) {
     // Dinamik bellek kullanarak yeni urun olusturuyoruz
     ProductToPurchase* newItem = new ProductToPurchase(product, quantity);
     productsToPurchase.push_back(newItem);
-    cout << "Urun sepete eklendi: " << product->getName() << endl;
+    cout << "Product added to cart: " << product->getName() << endl;
 }
 
 // Sepetten urun silme islemi
@@ -58,23 +58,23 @@ void ShoppingCart::removeProduct(Product* product) {
         if (productsToPurchase[i]->getProduct()->getID() == product->getID()) {
             delete productsToPurchase[i]; // Bellegi temizle
             productsToPurchase.erase(productsToPurchase.begin() + i); // Listeden sil
-            cout << "Urun sepetten cikarildi." << endl;
+            cout << "Product removed from cart." << endl;
             return;
         }
     }
-    cout << "Urun sepetinizde bulunamadi." << endl;
+    cout << "Product not found in cart." << endl;
 }
 
 // Sepetteki urunleri listeleme
 void ShoppingCart::printProducts() {
     if (productsToPurchase.empty()) {
-        cout << "Sepetiniz bos." << endl;
+        cout << "Your cart is empty." << endl;
         return;
     }
-    cout << "--- Sepetteki Urunler ---" << endl;
+    cout << "--- Products in Cart ---" << endl;
     for (auto item : productsToPurchase) {
         item->getProduct()->printProperties(); 
-        cout << "Adet: " << item->getQuantity() << endl;
+        cout << "Quantity: " << item->getQuantity() << endl;
         cout << "-------------------------" << endl;
     }
 }
@@ -82,7 +82,7 @@ void ShoppingCart::printProducts() {
 // Siparisi tamamlama ve odeme islemleri
 void ShoppingCart::placeOrder() {
     if (productsToPurchase.empty()) {
-        cout << "Sepet bos, siparis verilemez." << endl;
+        cout << "Cart is empty, cannot place order" << endl;
         return;
     }
 
@@ -123,14 +123,14 @@ void ShoppingCart::cancelOrder() {
         delete item;
     }
     productsToPurchase.clear();
-    cout << "Sepet bosaltildi." << endl;
+    cout << "Cart cleared." << endl;
 }
 
 // Fatura detaylarini gosterme
 void ShoppingCart::showInvoice() {
-    cout << "\n****** FATURA ******" << endl;
-    cout << "Musteri: " << customer->getName() << endl;
+    cout << "\n****** INVOICE ******" << endl;
+    cout << "Customer: " << customer->getName() << endl;
     //paymentMethod varsa yazdır
-    if(paymentMethod != nullptr) cout << "Odenen Tutar: " << paymentMethod->getAmount() << " TL" << endl;
+    if(paymentMethod != nullptr) cout << "Paid Amount: " << paymentMethod->getAmount() << " TL" << endl;
     cout << "********************\n" << endl;
 }
