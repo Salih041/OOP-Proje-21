@@ -3,32 +3,33 @@
 */
 
 #include <iostream>
-#include <string>
-#include "Check.h"      // Header dosyası dahil ediliyor.
+#include "Check.h" // Header dosyası dahil ediliyor.
 
-using namespace std;
 
-void Check::performPayment()        // Payment class'ında virtual olarak oluşturulan fonksiyonun görev tanımı.
+Check::Check(double amount, const string& name, const string& bankID)
+    : Payment(amount), name(name), bankID(bankID) {}
+
+void Check::performPayment() // Payment class'ında virtual olarak oluşturulan fonksiyonun görev tanımı.
 {
     cout << "Check payment done" << endl;
 }
 
-string Check::getName()     // name değişkeni döndürülüyor.
+string Check::getName() const // name değişkeni döndürülüyor.
 {
     return name;
 }
 
-void Check::setName(string n)       // name değişkeni değiştiriliyor.
+void Check::setName(const string& n) // name değişkeni değiştiriliyor.
 {
     name = n;
 }
 
-string Check::getBankID()       // bankID değişkeni döndürülüyor.
+string Check::getBankID() const // bankID değişkeni döndürülüyor.
 {
     return bankID;
 }
 
-void Check::setBankID(string b)     // bankID değişkeni değiştiriliyor.
+void Check::setBankID(const string& b) // bankID değişkeni değiştiriliyor.
 {
     bankID = b;
 }
