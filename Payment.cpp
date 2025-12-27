@@ -3,12 +3,11 @@
 */
 
 #include <iostream>
-#include <string>
 #include "Payment.h"    // Header dosyası dahil ediliyor.
 
-using namespace std;
+Payment::Payment(double amount) : amount(amount) {}
 
-double Payment::getAmount()     // amount değeri döndürülüyor.
+double Payment::getAmount() const     // amount değeri döndürülüyor.
 {
     return amount;
 }
