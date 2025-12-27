@@ -17,7 +17,7 @@ private:
 	std::vector<std::string> options;  // seceneklerin tutuldugu vector
 public:
 	Menu(std::string menuTitle); // constructor fonksiyon
-	~Menu(); // defaul destructure
+	~Menu(); // default destructure
 	int DisplayAndGetChoice(); // Secenekleri basan ve kullanýcýdan secim alan fonksiyon
 	void AddOption(std::string option); // yeni secenek ekleme fonksiyonu
 };

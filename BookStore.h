@@ -5,7 +5,6 @@
 #ifndef BOOKSTORE_H
 #define BOOKSTORE_H
 
-// include lar gelecek
 #include "Product.h"
 #include "Customer.h"
 #include "ShoppingCart.h"
@@ -16,20 +15,20 @@
 class BookStore
 {
 private:
-	std::vector<Product*> products;
-	std::vector<Customer*> customers;
-	Customer* currentCustomer;
-	ShoppingCart* currentCart;
+	std::vector<Product*> products; // sistemdeki ürünler
+	std::vector<Customer*> customers; // sistemdeki müþteriler
+	Customer* currentCustomer; // giriþ yapan müþteri
+	ShoppingCart* currentCart; // giriþ yapan müþterinin sepeti
 
 public:
 	BookStore();
 	~BookStore();
 
 	void Run();
-	void LoadData();
+	void LoadData();  // baþlangýç verilerini (5 ürün, 5 müþteri) yükleyen fonksiyon
 
 	void Login();
-	void DisplayMenu();
+	void DisplayMenu(); // Programýn ana menüsü
 	void DisplayShoppingMenu();
 
 	void DisplayAdminProductsMenu();

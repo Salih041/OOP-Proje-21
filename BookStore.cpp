@@ -13,24 +13,23 @@
 #include "Magazine.h"
 #include "ProductToPurchase.h"
 #include "ShoppingCart.h"
-// includelar
 
 #include <iostream>
 #include <vector>
 using namespace std;
 
-BookStore::BookStore() {
-	currentCustomer = nullptr;
+BookStore::BookStore() { // baþlangýçta müþteri ve sepeti boþ pointera ata
+	currentCustomer = nullptr;  
 	currentCart = nullptr;
-	LoadData();
+	LoadData(); // baþlangýç verilerini yükle
 }
 
-BookStore::~BookStore() {
+BookStore::~BookStore() { // Belleði temizle
 	for (Product* p : products) delete p;
 	for (Customer* c : customers) delete c;
 	products.clear();
 	customers.clear();
-	cout << "Bellek temizlendi" << endl;
+	cout << "Memory Cleared" << endl;
 }
 
 void BookStore::LoadData() {
@@ -50,54 +49,52 @@ void BookStore::LoadData() {
 void BookStore::Login()
 {
 	if (currentCustomer != nullptr) {
-	cout << "\nZaten Giris Yapildi: " << currentCustomer->getUsername() << endl;
+	cout << "\nAlready Logged In: " << currentCustomer->getUsername() << endl;
 		return;
 	}
 	cin.ignore();
-	cout << "==== GIRIS YAP ====" << endl;
+	cout << "==== LOG IN ====" << endl;
 	string usernameInput, passwordInput;
-	cout << "Kullanýcý Adý : ";
+	cout << "Username : ";
 	getline(cin, usernameInput);
-	cout << "Sifre         : ";
+	cout << "Password : ";
 	getline(cin, passwordInput);
 
 	bool isFound = false;
-	// customerlar icinde arama 
-	// if (c->username == usinput && psw == pswinput ...
-	for (Customer* c : customers) {
+	for (Customer* c : customers) {  // girilen username ve password e ait kullanýcý sistemde var mý?
 		if (c->checkAccount(usernameInput, passwordInput)) {
-			currentCustomer = c;
+			currentCustomer = c;  // sistemde bulunan kullanýcýyý mevcut kullanýcý olarak ata
 			isFound = true;
 
 			currentCart = new ShoppingCart();
-			currentCart->setCustomer(currentCustomer);
+			currentCart->setCustomer(currentCustomer);  // kullanýcýya yeni bir sepet tanýmla
 			break;
 		}
 	}
 
 	if (isFound)
 	{
-		cout << "HOS GELDÝNÝZ!" << currentCustomer->getName() << endl;
+		cout << "WELCOME! " << currentCustomer->getName() << endl;
 	}
 	else {
-		cout << "\nHATALI KULLANICI ADI VEYA SIFRE!" << endl;
-		cout << "Lutfen tekrar deneyin veya kayit olun." << endl;
+		cout << "\nINVALID USERNAME OR PASSWORD" << endl;
+		cout << "Please try again or register" << endl;
 	}
 
 }
 
-void BookStore::Run() {
-	cout << "HOSGELDINIZ" << endl;
+void BookStore::Run() { // Ana Program Akýþý
+	cout << "WELCOME" << endl;
 	DisplayMenu();
 }
 
 // ANA MENU
 void BookStore::DisplayMenu() {
-	Menu mainMenu("ANA MENU");
+	Menu mainMenu("MAIN MENU");
 	mainMenu.AddOption("Customers (admin)");
 	mainMenu.AddOption("Products (admin)");
 	mainMenu.AddOption("Shopping");
-	mainMenu.AddOption("Cikis Yap");
+	mainMenu.AddOption("EXIT");
 
 	while (true) {
 		int secim = mainMenu.DisplayAndGetChoice();
@@ -113,7 +110,7 @@ void BookStore::DisplayMenu() {
 			DisplayShoppingMenu();
 			break;
 		case 4:
-			cout << "Cikis Yapiliyor..." << endl;
+			cout << "Exiting..." << endl;
 			return;
 		}
 	}
@@ -121,17 +118,17 @@ void BookStore::DisplayMenu() {
 
 // 1- ADMIN MENU <- customers
 void BookStore::DisplayAdminCustomersMenu() {
-	Menu customersAdminMenu("KULLANICILAR MENUSU (ADMIN)");
-	customersAdminMenu.AddOption("Yeni Kullanýcý Ekle");
-	customersAdminMenu.AddOption("Kullanýcýlarý Listele");
-	customersAdminMenu.AddOption("Geri");
+	Menu customersAdminMenu("CUSTOMERS MENU");
+	customersAdminMenu.AddOption("Add New Customer");
+	customersAdminMenu.AddOption("List Customers");
+	customersAdminMenu.AddOption("Back");
 
 	while (true)
 	{
 		int secim = customersAdminMenu.DisplayAndGetChoice();
 		switch (secim) {
 		case 1:
-			AddNewCustomer(); // yapilcak
+			AddNewCustomer();
 			break;
 		case 2:
 			ShowAllCustomers();
@@ -143,32 +140,32 @@ void BookStore::DisplayAdminCustomersMenu() {
 }
 // customers admin menu icin yardimci fonksiyon
 void BookStore::AddNewCustomer() {
-	cout << "\n--- KULLANICI EKLEME ---" << endl;
+	cout << "\n--- ADD CUSTOMER ---" << endl;
 	string name, address, phone, email, username, password;
 	cin.ignore();
 
-	cout << "Ad Soyad: ";
+	cout << "Name Surname: ";
 	getline(cin, name);
-	cout << "Adres: ";
+	cout << "Address     : ";
 	getline(cin, address);
-	cout << "Telefon No: ";
+	cout << "Phone No    : ";
 	getline(cin, phone);
-	cout << "E-Mail: ";
+	cout << "E-Mail      : ";
 	getline(cin, email);
-	cout << "Kullanýcý Adý: ";
+	cout << "Username    : ";
 	getline(cin, username);
-	cout << "Þifre: ";
+	cout << "Password    : ";
 	getline(cin, password);
 
 	customers.push_back(new Customer(0, name, address, phone, email, username, password));
 	
-	cout << "Müþteri Baþarýyla Eklendi" << endl;
+	cout << "Customer Created Successfully" << endl;
 }
 
 void BookStore::ShowAllCustomers() {
-	cout << "KULLANICILAR" << endl;
+	cout << "CUSTOMERS" << endl;
 	if (customers.empty()) {
-		cout << "Kullanýcý Yok" << endl;
+		cout << "No customers found" << endl;
 		return;
 	}
 	for (Customer* c : customers) {
@@ -179,10 +176,10 @@ void BookStore::ShowAllCustomers() {
 
 // 2- ADMIN MENU <- products
 void BookStore::DisplayAdminProductsMenu() {
-	Menu productsAdminMenu("URUNLER MENUSU (ADMIN)");
-	productsAdminMenu.AddOption("Yeni Urun Ekle");
-	productsAdminMenu.AddOption("Urunleri Listele");
-	productsAdminMenu.AddOption("Geri");
+	Menu productsAdminMenu("PRODUCTS MENU");
+	productsAdminMenu.AddOption("Add New Product");
+	productsAdminMenu.AddOption("List Products");
+	productsAdminMenu.AddOption("Back");
 
 	while (true)
 	{
@@ -204,11 +201,11 @@ void BookStore::DisplayAdminProductsMenu() {
 
 // products admin menu icin yardimci fonksiyon
 void BookStore::AddNewProduct() {
-	cout << "\n--- URUN EKLEME ---" << endl;
-	cout << "1- Kitap" << endl;
-	cout << "2- Dergi" << endl;
-	cout << "3- Muzik CD" << endl;
-	cout << "Seciminiz (Iptal icin 0): ";
+	cout << "\n--- ADD PRODUCT ---" << endl;
+	cout << "1- Book" << endl;
+	cout << "2- Magazine" << endl;
+	cout << "3- Music CD" << endl;
+	cout << "Choice (0 to cancel): ";
 	int turSecim;
 	cin >> turSecim;
 
@@ -216,10 +213,10 @@ void BookStore::AddNewProduct() {
 
 	string name;
 	double price;
-	cout << "Urun Adi : ";
+	cout << "Product Name : ";
 	cin.ignore();
 	getline(cin, name);
-	cout << "Fiyat : ";
+	cout << "Price        : ";
 	cin >> price;
 
 
@@ -227,12 +224,12 @@ void BookStore::AddNewProduct() {
 
 		string author, publisher;
 		int page;
-		cout << "Yazar : ";
+		cout << "Author    : ";
 		cin.ignore();
 		getline(cin, author);
-		cout << "Yayinci : ";
+		cout << "Publisher : ";
 		getline(cin, publisher);
-		cout << "Sayfa Sayisi : ";
+		cout << "Pages     : ";
 		cin >> page;
 
 		products.push_back(new Book(name, price, author, publisher, page));
@@ -240,10 +237,10 @@ void BookStore::AddNewProduct() {
 	else if (turSecim == 2) {
 		int issue;
 		string type;
-		cout << "Basim : ";
+		cout << "Issue     : ";
 		cin.ignore();
 		cin >> issue;
-		cout << "Type : ";
+		cout << "Type      : ";
 		cin.ignore();
 		getline(cin, type);
 		
@@ -252,24 +249,24 @@ void BookStore::AddNewProduct() {
 	else if (turSecim == 3)
 	{
 		string singer, type;
-		cout << "Sarkici : ";
+		cout << "Singer    : ";
 		cin.ignore();
 		getline(cin, singer);
-		cout << "Type : ";
+		cout << "Type      : ";
 		cin.ignore();
 		getline(cin, type);
 
 		products.push_back(new MusicCD(name,price,singer,type));
 	}
 	else {
-		cout << "Hatali Secim!!" << endl;
+		cout << "Invalid Choice!!" << endl;
 	}
 }
 // products admin ve shopping menuleri için yardýmcý fonksiyon
 void BookStore::ShowAllProducts() {
-	cout << "URUNLER" << endl;
+	cout << "Products" << endl;
 	if (products.empty()) {
-		cout << "Urun Yok" << endl;
+		cout << "No Products Found" << endl;
 		return;
 	}
 	for (Product* p : products) {
@@ -280,25 +277,25 @@ void BookStore::ShowAllProducts() {
 
 // 3- Shopping Menu : Musterinin asil kullanacagi yer
 void BookStore::DisplayShoppingMenu() {
-	Menu customerMenu("MUSTERI PANELI");
-	customerMenu.AddOption("Giris Yap");
-	customerMenu.AddOption("Urunleri Kesfet"); // yeni urun almak icin
-	customerMenu.AddOption("Sepetim");
-	customerMenu.AddOption("Sepete Ekle");       // sepete urun ekle
-	customerMenu.AddOption("Sepetten Kaldýr"); // cikar
-	customerMenu.AddOption("Bonusumu Goster");
-	customerMenu.AddOption("Bonusu Kullan");
-	customerMenu.AddOption("Siparisi Tamamla");
-	customerMenu.AddOption("Siparisi Iptal Et");
-	customerMenu.AddOption("Fatura Goster");
-	customerMenu.AddOption("Oturumu Kapat");
+	Menu customerMenu("SHOPPING MENU");
+	customerMenu.AddOption("Login");
+	customerMenu.AddOption("Products"); // yeni urun almak icin
+	customerMenu.AddOption("My Cart");
+	customerMenu.AddOption("Add Product to Cart");       // sepete urun ekle
+	customerMenu.AddOption("Remove Product from Cart"); // cikar
+	customerMenu.AddOption("Show Bonus");
+	customerMenu.AddOption("Use Bonus");
+	customerMenu.AddOption("Place Order");
+	customerMenu.AddOption("Cancel Order");
+	customerMenu.AddOption("Show Invoice");
+	customerMenu.AddOption("Log Out");
 
 	bool stayInMenu = true;
 	while (stayInMenu) {
 		int secim = customerMenu.DisplayAndGetChoice();
 		if (currentCustomer == nullptr && !(secim == 1 || secim == 2 || secim == 11))  // 1, 2 ,11 basarsa switch case e geç 
 		{
-			cout << "Bu Islemi Yapmak Icin Once Giris Yapmalisiniz ! " << endl;
+			cout << "You must log in to perform this operation!" << endl;
 			continue;
 		}
 		if (currentCustomer != nullptr && currentCart == nullptr) {
@@ -320,12 +317,12 @@ void BookStore::DisplayShoppingMenu() {
 			if (currentCart)
 				currentCart->printProducts();
 			else
-				cout << "Sepetiniz bos." << endl;
+				cout << "Your Cart is Empty" << endl;
 			break;
 		case 4:
 		{// add to cart
-			cout << "=== SEPETE EKLE ===";
-			cout << "Eklemek istediginiz urun id'si : ";
+			cout << "=== Add Product to Cart ===";
+			cout << "Product ID to add";
 			int idToAdd;
 			cin >> idToAdd;
 			Product* selectedProduct = nullptr;
@@ -337,23 +334,23 @@ void BookStore::DisplayShoppingMenu() {
 			}
 			if (selectedProduct != nullptr)
 			{
-				cout << "Urun: " << selectedProduct->getName() << " ( " << selectedProduct->getPrice() << " TL )" << endl;
-				cout << "Kac adet eklemek istersiniz?: ";
+				cout << "Product: " << selectedProduct->getName() << " ( " << selectedProduct->getPrice() << " TL )" << endl;
+				cout << "Quantity";
 				int quantityInput;
 				cin >> quantityInput;
 				currentCart->addProduct(selectedProduct, quantityInput);
 			}
 			else
 			{
-				cout << "Girdiðiniz id ile eþlesen bir ürün bulunamadý!" << endl;
+				cout << "No product found with the entered ID!" << endl;
 			}
 			break;
 		}
 		case 5:
 		{
 			// sepetten cikar
-			cout << "=== SEPETTEN ÇIKAR ===" << endl;
-			cout << "Sepetinizden çýkarmak istediðiniz ürünün id'si : ";
+			cout << "=== Remove Product from Cart ===" << endl;
+			cout << "Product ID to remove: ";
 			int idToDel;
 			cin >> idToDel;
 			Product* productToRemove = nullptr;
@@ -367,38 +364,38 @@ void BookStore::DisplayShoppingMenu() {
 				currentCart->removeProduct(productToRemove);
 			}
 			else {
-				cout << "Girilen id ile eþleþen bir ürün bulunamadý!" << endl;
+				cout << "No product found with the entered ID!" << endl;
 			}
 			break;
 		}
 		case 6:
-			// b onus goster
-			cout << "Mevcut Bonusunuz : " << currentCustomer->getBonus() << endl;
+			// bonus goster
+			cout << "Your Bonus : " << currentCustomer->getBonus() << endl;
 			break;
 		case 7:
 			// bonus kullan
 			currentCart->setBonusUsed(true);
-			cout << "Bonusunuz aktif edildi." << endl;
+			cout << "Bonus Activated" << endl;
 			break;
 		case 8:
 		{
 			// siparis
-			cout << "Ödeme Yöntemini Seçiniz" << endl;
-			cout << "1. Kredi Kartý" << endl;
-			cout << "2. Nakit (Cash)" << endl;
-			cout << "3. Çek (Check)" << endl;
-			cout << "Seçiminiz: ";
+			cout << "Select Payment Method" << endl;
+			cout << "1. Credit Cart" << endl;
+			cout << "2. Cash" << endl;
+			cout << "3. Check" << endl;
+			cout << "Your choice: ";
 			int paySecim;
 			cin >> paySecim;
 
 			Payment* newPayment = nullptr;
 			if (paySecim == 1) {
-				//kredi kartý
+				// cc
 				long no;
 				string cardType, expDate;
-				cout << "Kart Numarasý : "; cin >> no;
-				cout << "Kart Tipi : "; cin.ignore(); getline(cin, cardType);
-				cout << "Son Kullaným Tarihi : "; getline(cin, expDate);
+				cout << "Card Number     : "; cin >> no;
+				cout << "Card Type       : "; cin.ignore(); getline(cin, cardType);
+				cout << "Expiration Date : "; getline(cin, expDate);
 
 				CreditCard* cc = new CreditCard();
 				cc->setNumber(no);
@@ -408,16 +405,16 @@ void BookStore::DisplayShoppingMenu() {
 			}
 			else if (paySecim == 2)
 			{
-				// nakit
+				// cash
 				newPayment = new Cash();
 			}
 			else if (paySecim == 3)
 			{
-				// çek
+				// check
 				string name, bankId;
-				cout << "Ad Soyad : ";
+				cout << "Name Surname : ";
 				cin.ignore(); getline(cin, name);
-				cout << "Banka ID : "; getline(cin, bankId);
+				cout << "Bank ID      : "; getline(cin, bankId);
 
 				Check* c = new Check();
 				c->setBankID(bankId);
@@ -426,7 +423,7 @@ void BookStore::DisplayShoppingMenu() {
 			}
 			else
 			{
-				cout << "Gecersiz secim! Islem iptal edildi." << endl;
+				cout << "Invalid choice! Operation cancelled." << endl;
 				break;
 			}
 
@@ -437,12 +434,12 @@ void BookStore::DisplayShoppingMenu() {
 			break;
 		}
 		case 9:
-			// siparis itpali
+			// siparis iptali
 			currentCart->cancelOrder();
-			cout << "Siparis iptal edildi, sepet bosaltildi." << endl;
+			cout << "Order cancelled, cart cleared." << endl;
 			break;
 		case 10:
-			// fatura
+			// fatura göster
 			currentCart->showInvoice();
 			break;
 		case 11:
@@ -454,7 +451,7 @@ void BookStore::DisplayShoppingMenu() {
 					delete currentCart;
 					currentCart = nullptr;
 				}
-				cout << "Oturum Kapatildi" << endl;
+				cout << "Logged Out" << endl;
 			}
 			stayInMenu = false;
 			break;
